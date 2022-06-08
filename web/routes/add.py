@@ -20,8 +20,9 @@ def add_page():
         flash(f"{form.name.data} added sucessfully !", category="success")
         return redirect(url_for("dashboard_page"))
     if form.errors:
-        error = ""
-        for key, err in form.errors.items():
-            error += key + ": " + str(err[0]) + "<br>"
+        error = "".join(
+            f"{key}: {str(err[0])}<br>" for key, err in form.errors.items()
+        )
+
         flash(error, category="danger")
     return render_template('add.html', form=form)

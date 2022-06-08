@@ -7,12 +7,15 @@ from web.database import Secret
 
 
 def get_users_secrets(username: str):
-    data = []
     selected_data = Secret.select().where(Secret.username == username)
-    for secret in selected_data:
-        data.append(dict(name=secret.name, password=pyotp.TOTP(
-            secret.secret).now(), id=secret.secret_id))
-    return data
+    return [
+        dict(
+            name=secret.name,
+            password=pyotp.TOTP(secret.secret).now(),
+            id=secret.secret_id,
+        )
+        for secret in selected_data
+    ]
 
 
 @app.route('/dashboard', methods=["GET", "POST"])

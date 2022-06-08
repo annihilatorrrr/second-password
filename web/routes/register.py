@@ -20,8 +20,9 @@ def register_page():
             f'Account created successfully! You are now logged in as {usert_to_create.name}', category='success')
         return redirect(url_for("dashboard_page"))
     if form.errors:
-        error = ""
-        for key, err in form.errors.items():
-            error += key + ": " + str(err[0]) + "<br>"
+        error = "".join(
+            f"{key}: {str(err[0])}<br>" for key, err in form.errors.items()
+        )
+
         flash(error, category="danger")
     return render_template('register.html', form=form)

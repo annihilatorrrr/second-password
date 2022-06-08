@@ -32,14 +32,12 @@ class RegisterForm(FlaskForm):
 
     # validate_<fieldname>
     def validate_username(self, username):
-        user = User.get_or_none(User.username == username.data)
-        if user:
+        if user := User.get_or_none(User.username == username.data):
             raise ValidationError(
                 'Username already exist! Please try a different username.')
 
     def validate_email(self, email):
-        email = User.get_or_none(User.email == email.data)
-        if email:
+        if email := User.get_or_none(User.email == email.data):
             raise ValidationError(
                 'Email address already exist! Please try a different email addres.')
 
